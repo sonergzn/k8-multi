@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations: #extra parameters that you can pass.
+    kubernetes.io/ingress.class: nginx #Simple telling that we want to create ingress based on nginx project
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec: 
+  rules:
+    - http:
+        paths:
+          - path: /?(.*) #If a request comes in with root path ==> route it to this service.
+            pathType: Prefix
+            backend:
+              service:
+                name: client-cluster-ip-service
+                port:
+                  number: 3000
+          - path: /api/?(.*) #If a request comes in with /api path ==> route it to this service.
+            pathType: Prefix
+            backend:
+              service: 
+                name: server-cluster-ip-service
+                port:
+                  number: 5000 #The port number of server cluster IP service
+          - path: /redis
+            pathType: Prefix
+            backend:
+              service: 
+                name: redis-cluster-ip-service
+                port:
+                  number: 6379
