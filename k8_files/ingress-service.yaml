@@ -24,10 +24,3 @@ spec:
                 name: server-cluster-ip-service
                 port:
                   number: 5000 #The port number of server cluster IP service
-          - path: /redis
-            pathType: Prefix
-            backend:
-              service: 
-                name: redis-cluster-ip-service
-                port:
-                  number: 6379
