@@ -26,8 +26,8 @@ spec:
           value: postgres
         - name: PGHOST
           value: postgres-cluster-ip-service
-#        - name: PGDATABASE
-#          value: "postgres"
+        - name: PGDATABASE
+          value: postgres
         - name: PGPASSWORD  #The Env variable that our app is expecting to see. 
           valueFrom: 
             secretKeyRef:
