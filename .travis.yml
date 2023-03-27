@@ -1,0 +1,5 @@
+sudo: required
+services:
+  - docker #Install docker on our runner in Travis.
+
+
