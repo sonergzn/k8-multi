@@ -2,7 +2,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  beforeinstall:
+  BeforeInstallAndRunTests:
     machine: #Runner Type, it can be docker, machine ...
       image: ubuntu-2004:202010-01
       docker_layer_caching: true #Gives the docker environment too (It caches the image layers).
@@ -25,11 +25,12 @@ jobs:
             gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
             gcloud projects list --sort-by=projectId --limit=5
       - run:
-          name: blabla
-          command: sudo echo "hello"
+          name: docker login
+          command: | 
+            echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   before_install_job:
     jobs:
-      - beforeinstall
+      - BeforeInstallAndRunTests
