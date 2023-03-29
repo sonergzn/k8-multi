@@ -17,8 +17,8 @@ jobs:
             echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
             curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
             sudo apt-get update && sudo apt-get install -y google-cloud-sdk
-            sudo gcloud --quit components update 
-            sudo gcloud --quit components update kubectl
+            sudo gcloud --quiet components update 
+            sudo gcloud --quiet components update kubectl
             echo ${GCLOUD_SERVICE_KEY} | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
 # Invoke jobs via workflows
