@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            docker run -it --rm sonergezgen/client timeout 30 npm test -- --coverage --exit
+            docker run -it --rm sonergezgen/client timeout 30 npm test -- --coverage
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
