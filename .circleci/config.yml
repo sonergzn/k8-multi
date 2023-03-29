@@ -21,6 +21,7 @@ jobs:
             sudo gcloud --quiet components update kubectl
             echo ${GCLOUD_SERVICE_KEY} | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud projects list --sort-by=projectId --limit=5
             gcloud config get-value ${GOOGLE_PROJECT_ID}
       - run:
           name: blabla
