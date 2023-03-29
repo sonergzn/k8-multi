@@ -25,9 +25,9 @@ jobs:
             gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
             gcloud projects list --sort-by=projectId --limit=5
       - run:
-          name: docker login
+          name: Docker Login
           command: | 
-            echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password
+            echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
