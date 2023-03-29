@@ -8,7 +8,7 @@ jobs:
       docker_layer_caching: true #Gives the docker environment too (It caches the image layers).
     resource_class: medium
     steps:
-      - checkout_and_pre-install
+      - checkout
       - run:
           name: "install google cloud sdk"
           command: |
