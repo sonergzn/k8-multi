@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "install google cloud sdk"
+          name: "install & authenticate google cloud sdk"
           command: |
             sudo apt-get update & sudo apt-get install -y curl
             export CLOUD_SDK_REPO="cloud-sdk-(lsb_release -c -s)"
@@ -20,7 +20,9 @@ jobs:
             sudo gcloud --quiet components update 
             sudo gcloud --quiet components update kubectl
             echo ${GCLOUD_SERVICE_KEY} | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud config set project ${GOOGLE_PROJECT_ID}
+            gcloud config set compute/zone ${GCLOUD_COMPUTE_ZONE}
+            gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
             gcloud projects list --sort-by=projectId --limit=5
       - run:
           name: blabla
