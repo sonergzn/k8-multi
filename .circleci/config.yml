@@ -10,17 +10,57 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Docker Login and build client for tests
+          name: "install & authenticate google cloud sdk"
+          command: |
+            sudo apt-get update & sudo apt-get install -y curl
+            export CLOUD_SDK_REPO="cloud-sdk-(lsb_release -c -s)"
+            echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
+            curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+            sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+            sudo gcloud --quiet components update 
+            sudo gcloud --quiet components update kubectl
+            echo ${GCLOUD_SERVICE_KEY} | gcloud auth activate-service-account --key-file=-
+            gcloud config set project ${GOOGLE_PROJECT_ID}
+            gcloud config set compute/zone ${GCLOUD_COMPUTE_ZONE}
+            gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
+            gcloud projects list --sort-by=projectId --limit=5
+
+      - run:
+          name: Docker Login and Build client for tests
           command: | 
             echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-            docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client
+            docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client 
+
       - run:
           name: Run Tests
           command: |
             docker run sonergezgen/client timeout 30 npm test -- --coverage
+            #CI=true npm test --watch=all should be set in ./client/package.json. Otherwise CI will never exit
+
+      - run:
+          name: export the build ID from circleCI to tag and build our images
+          command: |
+            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            echo ${BUILD_ID}
+            docker build -t sonergezgen/multi-client:${BUILD_ID} -f ./client/Dockerfile ./client
+            docker build -t sonergezgen/multi-server:${BUILD_ID} -f ./server/Dockerfile ./server
+            docker build -t sonergezgen/multi-worker:${BUILD_ID} -f ./worker/Dockerfile ./worker
+
+      - run:
+          name: Docker Push new Image build with tags.
+          command: |
+            docker push sonergezgen/multi-client:${BUILD_ID}
+            docker push sonergezgen/multi-server:${BUILD_ID}
+            docker push sonergezgen/multi-worker:${BUILD_ID}
+
+
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   before_install_job:
     jobs:
-      - BeforeInstallAndRunTests
+      - BeforeInstallAndRunTests:
+          filters:
+            branches:
+              only: main
