@@ -46,6 +46,13 @@ jobs:
             docker build -t sonergezgen/multi-server:${BUILD_ID} -f ./server/Dockerfile ./server
             docker build -t sonergezgen/multi-worker:${BUILD_ID} -f ./worker/Dockerfile ./worker
             docker images 
+      - run:
+          name: Docker Push new Image build with tags.
+          command: |
+            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            docker push sonergezgen/multi-client:${BUILD_ID}
+            docker push sonergezgen/multi-server:${BUILD_ID}
+            docker push sonergezgen/multi-worker:${BUILD_ID}
 
 
 
