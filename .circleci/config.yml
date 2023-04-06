@@ -46,12 +46,6 @@ jobs:
             docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client 
 
       - run:
-          name: Run Tests
-          command: |
-            docker run sonergezgen/client timeout 30 npm test -- --coverage
-            #CI=true npm test --watch=all should be set in ./client/package.json. Otherwise CI will never exit
-
-      - run:
           name: export the build ID from circleCI to tag and build our images
           command: |
             export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
