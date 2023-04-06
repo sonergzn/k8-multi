@@ -65,14 +65,14 @@ jobs:
             docker push sonergezgen/multi-server:${BUILD_ID}
             docker push sonergezgen/multi-worker:${BUILD_ID}
 
-      #- run:
-      #    name: Deployment for Kubernetes
-      #    command: |
-      #      #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
-      #      kubectl apply -f k8_files
-      #      kubectl set image deployments/client-deployment client=sonergezgen/multi-client:${BUILD_ID}
-      #      kubectl set image deployments/server-deployment server=sonergezgen/multi-server:${BUILD_ID}
-      #      kubectl set image deployments/worker-deployment worker=sonergezgen/multi-worker:${BUILD_ID}
+      - run:
+          name: Deployment for Kubernetes
+          command: |
+            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            kubectl apply -f k8_files
+            kubectl set image deployments/client-deployment client=sonergezgen/multi-client:${BUILD_ID}
+            kubectl set image deployments/server-deployment server=sonergezgen/multi-server:${BUILD_ID}
+            kubectl set image deployments/worker-deployment worker=sonergezgen/multi-worker:${BUILD_ID}
 
 
 
