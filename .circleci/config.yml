@@ -93,7 +93,7 @@ workflows:
       - Run_Tests_before
       - Build-test-push-deploy:
           requires:
-            - Run_Tests_on_PR_to_main
+            - Run_Tests_before
           filters:
             branches:
               only:
