@@ -1,9 +1,9 @@
 version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-environment:
-  BUILD_ID: "$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)"
-  CLOUDSDK_CORE_DISABLE_PROMPTS: '1'
+#environment:
+#  BUILD_ID: "$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)"
+#  CLOUDSDK_CORE_DISABLE_PROMPTS: '1'
 jobs:
   BeforeInstallAndRunTests:
     machine: #Runner Type, it can be docker, machine ...
@@ -48,7 +48,7 @@ jobs:
             docker build -t sonergezgen/multi-client:${BUILD_ID} -f ./client/Dockerfile ./client
             docker build -t sonergezgen/multi-server:${BUILD_ID} -f ./server/Dockerfile ./server
             docker build -t sonergezgen/multi-worker:${BUILD_ID} -f ./worker/Dockerfile ./worker
-            
+
             docker build -t sonergezgen/multi-client:${BUILD_ID} -t sonergezgen/multi-client:latest -f ./client/Dockerfile ./client
             docker build -t sonergezgen/multi-server:${BUILD_ID} -t sonergezgen/multi-server:latest -f ./server/Dockerfile ./server
             docker build -t sonergezgen/multi-worker:${BUILD_ID} -t sonergezgen/multi-worker:latest -f ./worker/Dockerfile ./worker
