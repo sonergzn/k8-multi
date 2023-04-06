@@ -43,7 +43,7 @@ jobs:
       - run:
           name: export the build ID from circleCI to tag and build our images
           command: |
-            #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
             echo ${BUILD_ID}
             docker build -t sonergezgen/multi-client:${BUILD_ID} -f ./client/Dockerfile ./client
             docker build -t sonergezgen/multi-server:${BUILD_ID} -f ./server/Dockerfile ./server
@@ -56,8 +56,7 @@ jobs:
       - run:
           name: Docker Push new Image build with tags.
           command: |
-            #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
-            #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
             docker push sonergezgen/multi-client:latest
             docker push sonergezgen/multi-server:latest
             docker push sonergezgen/multi-worker:latest
