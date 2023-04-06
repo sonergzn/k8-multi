@@ -5,6 +5,15 @@ version: 2.1
 #  BUILD_ID: "$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)"
 #  CLOUDSDK_CORE_DISABLE_PROMPTS: '1'
 jobs:
+  Run_Tests_before:
+    docker: 
+      - image: ubuntu:latest
+    steps:
+      - run:
+          name: Run Tests
+          command: |
+              docker run sonergezgen/client timeout 30 npm test -- --coverage
+
   Build-test-push-deploy:
     machine: #Runner Type, it can be docker, machine ...
       image: ubuntu-2004:202010-01
@@ -81,9 +90,14 @@ jobs:
 workflows:
   Whole_CICD_K8:
     jobs:
+      - Run_Tests_before
       - Build-test-push-deploy:
+          requires:
+            - Run_Tests_on_PR_to_main
           filters:
             branches:
-              only: main
+              only:
+                - main
+
               
 
