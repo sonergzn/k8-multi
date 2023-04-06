@@ -1,11 +1,14 @@
 version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+environment:
+  BUILD_ID: "$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)"
+  CLOUDSDK_CORE_DISABLE_PROMPTS: '1'
 jobs:
   BeforeInstallAndRunTests:
     machine: #Runner Type, it can be docker, machine ...
       image: ubuntu-2004:202010-01
-      docker_layer_caching: true #Gives the docker environment too (It caches the image layers).
+      docker_layer_caching: true #Gives the docker environment too (It cache the image layers).
     resource_class: medium
     steps:
       - checkout
@@ -40,21 +43,37 @@ jobs:
       - run:
           name: export the build ID from circleCI to tag and build our images
           command: |
-            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
             echo ${BUILD_ID}
             docker build -t sonergezgen/multi-client:${BUILD_ID} -f ./client/Dockerfile ./client
             docker build -t sonergezgen/multi-server:${BUILD_ID} -f ./server/Dockerfile ./server
             docker build -t sonergezgen/multi-worker:${BUILD_ID} -f ./worker/Dockerfile ./worker
-            docker images 
+            
+            docker build -t sonergezgen/multi-client:${BUILD_ID} -t sonergezgen/multi-client:latest -f ./client/Dockerfile ./client
+            docker build -t sonergezgen/multi-server:${BUILD_ID} -t sonergezgen/multi-server:latest -f ./server/Dockerfile ./server
+            docker build -t sonergezgen/multi-worker:${BUILD_ID} -t sonergezgen/multi-worker:latest -f ./worker/Dockerfile ./worker
+
       - run:
           name: Docker Push new Image build with tags.
           command: |
-            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            docker push sonergezgen/multi-client:latest
+            docker push sonergezgen/multi-server:latest
+            docker push sonergezgen/multi-worker:latest
+
             docker push sonergezgen/multi-client:${BUILD_ID}
             docker push sonergezgen/multi-server:${BUILD_ID}
             docker push sonergezgen/multi-worker:${BUILD_ID}
 
-
+      #- run:
+      #    name: Deployment for Kubernetes
+      #    command: |
+      #      #export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+      #      kubectl apply -f k8_files
+      #      kubectl set image deployments/client-deployment client=sonergezgen/multi-client:${BUILD_ID}
+      #      kubectl set image deployments/server-deployment server=sonergezgen/multi-server:${BUILD_ID}
+      #      kubectl set image deployments/worker-deployment worker=sonergezgen/multi-worker:${BUILD_ID}
 
 
 
