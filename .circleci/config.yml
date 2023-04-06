@@ -5,7 +5,7 @@ version: 2.1
 #  BUILD_ID: "$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)"
 #  CLOUDSDK_CORE_DISABLE_PROMPTS: '1'
 jobs:
-  BeforeInstallAndRunTests:
+  Build-test-push-deploy:
     machine: #Runner Type, it can be docker, machine ...
       image: ubuntu-2004:202010-01
       docker_layer_caching: true #Gives the docker environment too (It cache the image layers).
@@ -79,9 +79,11 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  before_install_job:
+  Whole_CICD_K8:
     jobs:
-      - BeforeInstallAndRunTests:
+      - Build-test-push-deploy:
           filters:
             branches:
               only: main
+              
+
