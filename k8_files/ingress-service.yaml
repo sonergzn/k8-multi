@@ -6,18 +6,25 @@ metadata:
     kubernetes.io/ingress.class: nginx #Simple telling that we want to create ingress based on nginx project
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/use-regex: 'true'
-spec: 
+    #cert-manager.io/issuer: "letsencrypt-prod"
+    #networking.gke.io/managed-certificates: dev-k8-multi-com-certificate
+spec:
+  #tls:
+  #  - hosts:
+  #    - dev.k8-multi.com
+  #    - www.dev.k8-multi.com
   rules:
+    #- host: dev.k8-multi.com
     - http:
         paths:
-          - path: /?(.*) #If a request comes in with root path ==> route it to this service.
+          - path: / #If a request comes in with root path ==> route it to this service.
             pathType: Prefix
             backend:
               service:
                 name: client-cluster-ip-service
                 port:
                   number: 3000
-          - path: /api/?(.*) #If a request comes in with /api path ==> route it to this service.
+          - path: /api/ #If a request comes in with /api path ==> route it to this service.
             pathType: Prefix
             backend:
               service: 
