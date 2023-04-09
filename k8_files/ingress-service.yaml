@@ -17,14 +17,14 @@ spec:
     #- host: dev.k8-multi.com
     - http:
         paths:
-          - path: / #If a request comes in with root path ==> route it to this service.
+          - path: /?(.*) #If a request comes in with root path ==> route it to this service.
             pathType: Prefix
             backend:
               service:
                 name: client-cluster-ip-service
                 port:
                   number: 3000
-          - path: /api/ #If a request comes in with /api path ==> route it to this service.
+          - path: /api/?(.*) #If a request comes in with /api path ==> route it to this service.
             pathType: Prefix
             backend:
               service: 
