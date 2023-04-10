@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from './logo.svg';
-import j from './j.jpeg'
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import OtherPage from './OtherPage';
