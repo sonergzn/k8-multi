@@ -6,8 +6,8 @@ metadata:
     kubernetes.io/ingress.class: nginx #Simple telling that we want to create ingress based on nginx project
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/use-regex: 'true'
-    certmanager.k8s.io/cluster-issuer: letsencryp
-    certmanager.k8s.io/acme-challenge-type: http01
+    #certmanager.k8s.io/cluster-issuer: letsencryp
+    #certmanager.k8s.io/acme-challenge-type: http01
 spec:
   #tls:
   #  - hosts:
