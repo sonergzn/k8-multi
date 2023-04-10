@@ -10,4 +10,5 @@ spec:
     #ReadWriteMany: Can be read and written to by many nodes.
   resources:
     requests:
-      storage: 2Gi #Amount of Storage. Static or Dynamic. 
+      storage: 3Gi #Amount of Storage. Static or Dynamic.
+  storageClassName: standard
