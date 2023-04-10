@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import videome from './videome.mp4'
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import OtherPage from './OtherPage';
@@ -9,20 +10,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            VERSION K8 - update
-          </a>
-          <Link to="/">Click-Home</Link>
-          <Link to="/otherpage">Other Page</Link>
-        </header>
+      <video src={videome} 
+      width="600" 
+      height="300" 
+      controls="controls" 
+      autoplay="true" />
         <div>
+          <p> Gecmis olsun :)))) </p> <br/>
           <Route exact path="/" component={Fib} />
           <Route path="/otherpage" component={OtherPage} />
         </div>

@@ -1,11 +1,11 @@
 #### TESTING TRAVIS YAML ####
-sudo: required
-services:
-  - docker #Install docker on our runner in Travis.
-before_install: 
-  - curl https://sdk.cloud.google.com | bash > /dev/null;
-  - source $HOME/google-cloud-sdk/path.bash.inc
-  - gcloud components update kubectl
-  - gcloud auth activate-service-account --key-file service-account.json
+#sudo: required
+#services:
+#  - docker #Install docker on our runner in Travis.
+#before_install: 
+#  - curl https://sdk.cloud.google.com | bash > /dev/null;
+#  - source $HOME/google-cloud-sdk/path.bash.inc
+#  - gcloud components update kubectl
+#  - gcloud auth activate-service-account --key-file service-account.json
 
 
