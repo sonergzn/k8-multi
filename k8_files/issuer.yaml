@@ -9,7 +9,7 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: 'soner.gzn94@gmail.com'
     privateKeySecretRef:
-      name: letsencrypt-cluster-issuer-key #will be aut
+      name: letsencrypt-cluster-issuer-key #will be auto-generated
     solvers:
     - http01:
         ingress:
