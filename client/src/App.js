@@ -11,15 +11,17 @@ function App() {
     <Router>
       <div className="App">
       <header className="App-header"> 
-          <img src={j} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo" />
           <a
             className="App-link"
             href="https://reactjs.org"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Gecmis olsun :)))
+            VERSION K8 - argoCD
           </a>
+          <Link to="/">Click-Home</Link> 
+          <Link to="/otherpage">Other Page</Link>
         </header>
         <div>
 
