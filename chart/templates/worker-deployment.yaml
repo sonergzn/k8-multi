@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }}-worker-deployment
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.workerDeployment.replicas }}
+  selector:
+    matchLabels:
+      component: worker
+    {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        component: worker
+      {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: REDIS_HOST
+          value: {{ quote .Values.workerDeployment.worker.env.redisHost }}
+        - name: REDIS_PORT
+          value: {{ quote .Values.workerDeployment.worker.env.redisPort }}
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.workerDeployment.worker.image.repository }}:{{ .Values.workerDeployment.worker.image.tag
+          | default .Chart.AppVersion }}
+        name: worker
+        resources: {}
