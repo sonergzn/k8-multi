@@ -3,18 +3,18 @@ kind: Kustomization
 
 namespace: default
 replicas:
-  - name: multi-client
+  - name: client-deployment
     count: 3
-  - name: multi-worker
+  - name: worker-deployment
     count: 1
-  - name: multi-server
+  - name: server-deployment
     count: 3
 images:
-  - name: sonergezgen/client
+  - name: sonergezgen/multi-client
     newTag: latest
-  - name: sonergezgen/worker
+  - name: sonergezgen/multi-worker
     newTag: latest
-  - name: sonergezgen/server
+  - name: sonergezgen/multi-server
     newTag: latest
 resources:
   - ../../../k8_files
