@@ -3,3 +3,4 @@ CachedData/
 .travis.yml
 argocd/
 combined.yaml
+k8_files/kustomization.yaml
