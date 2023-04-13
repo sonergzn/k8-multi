@@ -2,3 +2,4 @@ CachedData/
 .vscode-root/
 .travis.yml
 argocd/
+.combined.yaml
