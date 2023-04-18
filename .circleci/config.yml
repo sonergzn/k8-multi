@@ -15,7 +15,8 @@ jobs:
           name: Run Tests
           command: |
               echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-              docker run sonergezgen/multi-client timeout 30 npm test -- --coverage
+              docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client
+              docker run sonergezgen/client timeout 30 npm test -- --coverage
 
   Build-test-push-deploy:
     machine: #Runner Type, it can be docker, machine ...
