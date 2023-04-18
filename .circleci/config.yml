@@ -11,6 +11,7 @@ jobs:
       docker_layer_caching: true #Gives the docker environment too (It cache the image layers).
     resource_class: medium
     steps:
+      - checkout
       - run:
           name: Run Tests
           command: |
