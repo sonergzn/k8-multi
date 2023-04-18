@@ -30,9 +30,11 @@ jobs:
           name: "install & authenticate google cloud sdk"
           command: |
             sudo apt-get update & sudo apt-get install -y curl
+            cho "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
             export CLOUD_SDK_REPO="cloud-sdk-(lsb_release -c -s)"
             echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
             curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
             sudo apt-get update && sudo apt-get install -y google-cloud-sdk
             sudo gcloud --quiet components update 
             sudo gcloud --quiet components update kubectl
@@ -42,11 +44,11 @@ jobs:
             gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
             gcloud projects list --sort-by=projectId --limit=5
 
-      - run:
-          name: Docker Login and Build client for tests
-          command: | 
-            echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-            docker build -t sonergezgen/multi-client -f ./client/Dockerfile.dev ./client 
+      #- run:
+      #    name: Docker Login and Build client for tests
+      #    command: | 
+      #      echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      #      docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client
 
       - run:
           name: export the build ID from circleCI to tag and build our images
