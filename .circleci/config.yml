@@ -44,10 +44,10 @@ jobs:
             gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
             gcloud projects list --sort-by=projectId --limit=5
 
-      #- run:
-      #    name: Docker Login and Build client for tests
-      #    command: | 
-      #      echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run:
+          name: Docker Login and Build client for tests
+          command: | 
+             echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
       #      docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client
 
       - run:
