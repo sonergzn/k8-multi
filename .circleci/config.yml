@@ -15,7 +15,7 @@ jobs:
           name: Run Tests
           command: |
               echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-              docker run sonergezgen/client timeout 30 npm test -- --coverage
+              docker run sonergezgen/multi-client timeout 30 npm test -- --coverage
 
   Build-test-push-deploy:
     machine: #Runner Type, it can be docker, machine ...
@@ -44,7 +44,7 @@ jobs:
           name: Docker Login and Build client for tests
           command: | 
             echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-            docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client 
+            docker build -t sonergezgen/multi-client -f ./client/Dockerfile.dev ./client 
 
       - run:
           name: export the build ID from circleCI to tag and build our images
