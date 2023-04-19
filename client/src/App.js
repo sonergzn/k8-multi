@@ -17,7 +17,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            VERSION K8 - TEST - TEST
+            VERSION K8 - TEST
           </a>
           <Link to="/">Click-Home</Link> 
           <Link to="/otherpage">Other Page</Link>
