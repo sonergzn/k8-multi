@@ -13,9 +13,9 @@ replicas:
     count: 3
 images:
   - name: sonergezgen/multi-client
-    newTag: ${BUILD_ID}
+    newTag: latest
   - name: sonergezgen/multi-worker
-    newTag: ${BUILD_ID}
+    newTag: latest
   - name: sonergezgen/multi-server
-    newTag: ${BUILD_ID} #latest
+    newTag: latest
 

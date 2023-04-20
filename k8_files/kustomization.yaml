@@ -5,7 +5,7 @@ resources:
   - client-cluster-ip-service.yaml
   - client-deployment.yaml
   - database-persistent-volume-claim.yaml
-  - ingress-service.yaml
+  #- ingress-service.yaml
   - postgres-cluster-ip-service.yaml
   - postgres-deployment.yaml
   - redis-cluster-ip-service.yaml
