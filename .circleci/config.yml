@@ -32,6 +32,8 @@ jobs:
             if command -v gcloud &> /dev/null
             then
               echo "Google Cloud SDK is installed"
+              sudo gcloud --quiet components update kubectl
+              echo ${GCLOUD_SERVICE_KEY} | gcloud auth activate-service-account --key-file=-
               gcloud config set project ${GOOGLE_PROJECT_ID}
               gcloud config set compute/zone ${GCLOUD_COMPUTE_ZONE}
               gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
