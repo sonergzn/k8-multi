@@ -29,21 +29,30 @@ jobs:
       - run:
           name: "install & authenticate google cloud sdk"
           command: |
-            sudo apt-get update & sudo apt-get install -y curl
-            echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-            export CLOUD_SDK_REPO="cloud-sdk-(lsb_release -c -s)"
-            echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
-            curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+            if command -v gcloud &> /dev/null
+            then
+              echo "Google Cloud SDK is installed"
+              gcloud config set project ${GOOGLE_PROJECT_ID}
+              gcloud config set compute/zone ${GCLOUD_COMPUTE_ZONE}
+              gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
+              gcloud projects list --sort-by=projectId --limit=5
+            else
+              echo "Google Cloud SDK is not installed"
+              sudo apt-get update & sudo apt-get install -y curl
+              echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+              export CLOUD_SDK_REPO="cloud-sdk-(lsb_release -c -s)"
+              echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
+              curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 
-            sudo apt-get update && sudo apt-get install -y google-cloud-sdk
-            sudo gcloud --quiet components update 
-            sudo gcloud --quiet components update kubectl
-            echo ${GCLOUD_SERVICE_KEY} | gcloud auth activate-service-account --key-file=-
-            gcloud config set project ${GOOGLE_PROJECT_ID}
-            gcloud config set compute/zone ${GCLOUD_COMPUTE_ZONE}
-            gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
-            gcloud projects list --sort-by=projectId --limit=5
-
+              sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+              sudo gcloud --quiet components update 
+              sudo gcloud --quiet components update kubectl
+              echo ${GCLOUD_SERVICE_KEY} | gcloud auth activate-service-account --key-file=-
+              gcloud config set project ${GOOGLE_PROJECT_ID}
+              gcloud config set compute/zone ${GCLOUD_COMPUTE_ZONE}
+              gcloud container clusters get-credentials ${GCLOUD_CLUSTER_NAME} 
+              gcloud projects list --sort-by=projectId --limit=5
+            fi
       - run:
           name: Docker Login and Build client for tests
           command: | 
