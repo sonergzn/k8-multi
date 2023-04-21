@@ -94,7 +94,7 @@ jobs:
             cat environments/PROD/multi-k8/kustomization.yaml
             find k8_files -type f -exec sed -i "s/\$(TAG)/${BUILD_ID}/g" {} \;
             cat k8_files/client-deployment.yaml
-            #kubectl apply -k environments/PROD/multi-k8
+            kubectl apply -k environments/PROD/multi-k8
             #kubectl apply -f k8_files
             #kubectl set image deployments/client-deployment client=sonergezgen/multi-client:${BUILD_ID}
             #kubectl set image deployments/server-deployment server=sonergezgen/multi-server:${BUILD_ID}
