@@ -14,7 +14,7 @@ spec:
     spec: 
       containers:
       - name: server
-        image: sonergezgen/multi-server:latest
+        image: sonergezgen/multi-server:($TAG)
         ports:
         - containerPort: 5000
         env:
