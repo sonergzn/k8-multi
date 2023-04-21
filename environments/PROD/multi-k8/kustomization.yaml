@@ -11,11 +11,11 @@ replicas:
     count: 1
   - name: server-deployment
     count: 3
-images:
-  - name: sonergezgen/multi-client:$(TAG)
-    newTag: "$(TAG)" #This value will be replaced with the circliCI buildID
-  - name: sonergezgen/multi-worker:$(TAG)
-    newTag: "$(TAG)"
-  - name: sonergezgen/multi-server:$(TAG)
-    newTag: "$(TAG)"
+#images:
+#  - name: sonergezgen/multi-client:$(TAG)
+#    newTag: "$(TAG)" #This value will be replaced with the circliCI buildID
+#  - name: sonergezgen/multi-worker:$(TAG)
+#    newTag: "$(TAG)"
+#  - name: sonergezgen/multi-server:$(TAG)
+#    newTag: "$(TAG)"
 
