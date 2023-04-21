@@ -90,7 +90,7 @@ jobs:
           name: Kustomize Deployment for Kubernetes
           command: |
             export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
-            sed -i "s/\$(TAG)/${BUILD_ID}/g" environments/PROD/multi-K8/kustomization.yaml
+            sed -i "s/\$(TAG)/${BUILD_ID}/g" environments/PROD/multi-k8/kustomization.yaml
             cat environments/PROD/k8-multi/kustomization.yaml
             #kubectl apply -k environments/PROD/multi-k8
             #kubectl apply -f k8_files
