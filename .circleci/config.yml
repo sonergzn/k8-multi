@@ -99,12 +99,12 @@ jobs:
             #cat k8_files/server-deployment.yaml
             #cat k8_files/worker-deployment.yaml
 
-
             kubectl apply -k environments/PROD/multi-k8
 
-            kubectl rollout restart deployment/client-deployment -n default
-            kubectl rollout restart deployment/server-deployment -n default
-            kubectl rollout restart deployment/worker-deployment -n default
+            #kubectl rollout restart deployment/client-deployment -n default
+            #kubectl rollout restart deployment/server-deployment -n default
+            #kubectl rollout restart deployment/worker-deployment -n default
+            
             #kubectl apply -f k8_files
             #kubectl set image deployments/client-deployment client=sonergezgen/multi-client:${BUILD_ID}
             #kubectl set image deployments/server-deployment server=sonergezgen/multi-server:${BUILD_ID}
