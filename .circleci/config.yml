@@ -99,6 +99,7 @@ jobs:
             #cat k8_files/server-deployment.yaml
             #cat k8_files/worker-deployment.yaml
 
+
             kubectl apply -k environments/PROD/multi-k8
             #kubectl apply -f k8_files
             #kubectl set image deployments/client-deployment client=sonergezgen/multi-client:${BUILD_ID}
