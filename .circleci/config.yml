@@ -95,18 +95,22 @@ jobs:
             then
               echo "Kustomize is already installed."
               kustomize version
+              cd environments/PROD/multi-k8
               kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
               kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
               kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
+              cd ../../../
               kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
             else
               wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.8.5/kustomize_v3.8.5_linux_amd64.tar.gz
               tar zxf kustomize_v3.8.5_linux_amd64.tar.gz 
               sudo mv  kustomize /usr/local/bin
+              cd environments/PROD/multi-k8
               kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
               kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
               kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
+              cd ../../../
               kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
             fi
