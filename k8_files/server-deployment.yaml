@@ -14,7 +14,7 @@ spec:
     spec: 
       containers:
       - name: server
-        image: sonergezgen/multi-server
+        image: sonergezgen/multi-server:$(TAG)
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
