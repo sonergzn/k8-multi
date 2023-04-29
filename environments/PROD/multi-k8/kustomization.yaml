@@ -13,8 +13,8 @@ replicas:
   name: server-deployment
 images:
 - name: sonergezgen/multi-client
-  newTag: ${BUILD_ID}
+  newTag: "1" #$(TAG)
 - name: sonergezgen/multi-server
-  newTag: ${BUILD_ID}
+  newTag: "1"
 - name: sonergezgen/multi-worker
-  newTag: ${BUILD_ID}
+  newTag: "1"

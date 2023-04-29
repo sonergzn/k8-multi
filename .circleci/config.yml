@@ -89,12 +89,15 @@ jobs:
       - run:
           name: Kustomize Deployment for Kubernetes
           command: |
-            export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
+            
 
             if command -v kustomize &> /dev/null
             then
+              export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
               echo "Kustomize is already installed."
               kustomize version
+
+              #sed -i "s/\$(TAG)/${BUILD_ID}/g" environments/PROD/multi-k8/kustomization.yaml
               cd environments/PROD/multi-k8
               kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
               kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
@@ -103,9 +106,12 @@ jobs:
               kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
             else
+              export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
               wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.8.5/kustomize_v3.8.5_linux_amd64.tar.gz
               tar zxf kustomize_v3.8.5_linux_amd64.tar.gz 
               sudo mv  kustomize /usr/local/bin
+
+              #sed -i "s/\$(TAG)/${BUILD_ID}/g" environments/PROD/multi-k8/kustomization.yaml
               cd environments/PROD/multi-k8
               kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
               kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
