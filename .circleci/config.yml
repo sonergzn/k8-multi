@@ -103,7 +103,8 @@ jobs:
               kustomize edit set image multi-server=sonergezgen/multi-server:${BUILD_ID}
               kustomize edit set image multi-worker=sonergezgen/multi-worker:${BUILD_ID}
               cd ../../../
-              kubectl apply -k environments/PROD/multi-k8
+              kubectl kustomize environments/PROD/multi-k8 | kubectl apply -f -
+              #kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
             else
               export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
@@ -117,7 +118,8 @@ jobs:
               kustomize edit set image multi-server=sonergezgen/multi-server:${BUILD_ID}
               kustomize edit set image multi-worker=sonergezgen/multi-worker:${BUILD_ID}
               cd ../../../
-              kubectl apply -k environments/PROD/multi-k8
+              kubectl kustomize environments/PROD/multi-k8 | kubectl apply -f -
+              #kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
             fi
 
