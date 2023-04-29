@@ -122,7 +122,6 @@ jobs:
               sed -i "s/\$(TAG)/${BUILD_ID}/g" k8_files/server-deployment.yaml 
               sed -i "s/\$(TAG)/${BUILD_ID}/g" k8_files/worker-deployment.yaml 
 
-              
               kubectl kustomize environments/PROD/multi-k8 | kubectl apply -f -
               #kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
