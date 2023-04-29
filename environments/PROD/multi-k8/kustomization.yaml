@@ -13,9 +13,9 @@ replicas:
     count: 3
 images:
   - name: sonergezgen/multi-client:${BUILD_ID}
-    newTag: 1.0.0       #This value will be replaced with the circliCI buildID
+    newTag: ${BUILD_ID}       #This value will be replaced with the circliCI buildID
   - name: sonergezgen/multi-worker:${BUILD_ID}
-    newTag: 1.0.0
+    newTag: ${BUILD_ID}
   - name: sonergezgen/multi-server:${BUILD_ID}
-    newTag: 1.0.0
+    newTag: ${BUILD_ID}
 

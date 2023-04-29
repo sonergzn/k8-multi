@@ -106,8 +106,8 @@ jobs:
             kubectl apply -k environments/PROD/multi-k8
             cd environments/PROD/multi-k8
             kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
-            #kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
-            #kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
+            kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
+            kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
 
             #kubectl rollout restart deployment/client-deployment -n default
             #kubectl rollout restart deployment/server-deployment -n default
