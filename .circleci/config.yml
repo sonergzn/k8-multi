@@ -99,9 +99,9 @@ jobs:
 
               #sed -i "s/\$(TAG)/${BUILD_ID}/g" environments/PROD/multi-k8/kustomization.yaml
               cd environments/PROD/multi-k8
-              kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
-              kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
-              kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
+              kustomize edit set image multi-client=sonergezgen/multi-client:${BUILD_ID}
+              kustomize edit set image multi-server=sonergezgen/multi-server:${BUILD_ID}
+              kustomize edit set image multi-worker=sonergezgen/multi-worker:${BUILD_ID}
               cd ../../../
               kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
@@ -113,9 +113,9 @@ jobs:
 
               #sed -i "s/\$(TAG)/${BUILD_ID}/g" environments/PROD/multi-k8/kustomization.yaml
               cd environments/PROD/multi-k8
-              kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
-              kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
-              kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
+              kustomize edit set image multi-client=sonergezgen/multi-client:${BUILD_ID}
+              kustomize edit set image multi-server=sonergezgen/multi-server:${BUILD_ID}
+              kustomize edit set image multi-worker=sonergezgen/multi-worker:${BUILD_ID}
               cd ../../../
               kubectl apply -k environments/PROD/multi-k8
               #cd environments/PROD/multi-k8
