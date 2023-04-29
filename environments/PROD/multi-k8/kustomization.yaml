@@ -12,9 +12,12 @@ replicas:
 - count: 3
   name: server-deployment
 images:
-- name: sonergezgen/multi-client
-  newTag: "1" #$(TAG)
-- name: sonergezgen/multi-server
-  newTag: "1"
-- name: sonergezgen/multi-worker
-  newTag: "1"
+- name: multi-client
+  newName: sonergezgen/multi-client
+  newTag: "2"
+- name: multi-server
+  newName: sonergezgen/multi-server
+  newTag: "2"
+- name: multi-worker
+  newName: sonergezgen/multi-worker
+  newTag: "2"
