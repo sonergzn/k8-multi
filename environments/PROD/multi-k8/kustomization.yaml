@@ -1,21 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../k8_files #Pointing to our manifests. 
+- ../../../k8_files
                       #(kustomization.yaml should be present in this directory. (generated with 'kustomoze build'))
 namespace: default
 replicas:
-  - name: client-deployment #Name of our deployment (look at client-deployment.yaml file)
-    count: 3 #This count variable overrides the 'replicas' parameter in your deployment. (this value always comes first)
-  - name: worker-deployment
-    count: 1
-  - name: server-deployment
-    count: 3
+- count: 3
+  name: client-deployment
+- count: 1
+  name: worker-deployment
+- count: 3
+  name: server-deployment
 images:
-  - name: sonergezgen/multi-client:${BUILD_ID}
-    newTag: ${BUILD_ID}       #This value will be replaced with the circliCI buildID
-  - name: sonergezgen/multi-worker:${BUILD_ID}
-    newTag: ${BUILD_ID}
-  - name: sonergezgen/multi-server:${BUILD_ID}
-    newTag: ${BUILD_ID}
-
+- name: sonergezgen/multi-client
+  newTag: ${BUILD_ID}
+- name: sonergezgen/multi-server
+  newTag: ${BUILD_ID}
+- name: sonergezgen/multi-worker
+  newTag: ${BUILD_ID}
