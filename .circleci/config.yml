@@ -90,7 +90,7 @@ jobs:
           name: Kustomize Deployment for Kubernetes
           command: |
             export BUILD_ID=$(echo ${CIRCLE_BUILD_URL} | cut -d'/' -f 7)
-            
+
             wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.8.5/kustomize_v3.8.5_linux_amd64.tar.gz
             tar zxf kustomize_v3.8.5_linux_amd64.tar.gz 
             sudo mv  kustomize /usr/local/bin
@@ -104,9 +104,10 @@ jobs:
             #cat k8_files/worker-deployment.yaml
 
             kubectl apply -k environments/PROD/multi-k8
+            cd environments/PROD/multi-k8
             kustomize edit set image client=sonergezgen/multi-client:${BUILD_ID}
-            kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
-            kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
+            #kustomize edit set image server=sonergezgen/multi-server:${BUILD_ID}
+            #kustomize edit set image worker=sonergezgen/multi-worker:${BUILD_ID}
 
             #kubectl rollout restart deployment/client-deployment -n default
             #kubectl rollout restart deployment/server-deployment -n default
