@@ -6,8 +6,10 @@ resources:
 
 variables:
   dockerRegistryServiceConnection: '7e3c52c1-8d74-452f-b783-e0b345cdb0e5'
-  imageRepository: 'sonergznkmulti'
   containerRegistry: 'testaks1.azurecr.io'
+  imageRepositoryclient: 'sonergznkmulti-client'
+  imageRepositoryserver: 'sonergznkmulti-server'
+  imageRepositoryworker: 'sonergznkmulti-worker'
   dockerfilePathclient: '$(Build.SourcesDirectory)/client/Dockerfile'
   dockerfilePathserver: '$(Build.SourcesDirectory)/server/Dockerfile'
   dockerfilePathworker: '$(Build.SourcesDirectory)/worker/Dockerfile'
@@ -29,11 +31,18 @@ stages:
       displayName: Install Docker CLI
       inputs:
         dockerVersion: '17.09.0-ce'
+
+    - task: CmdLine@2
+      inputs:
+        script: |
+          docker build -t sonergezgen/client -f ./client/Dockerfile.dev ./client
+          docker run sonergezgen/client timeout 30 npm test -- --coverage
+
     - task: Docker@2
       displayName: Build and push CLIENT image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(imageRepositoryclient)
         dockerfile: $(dockerfilePathclient)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
@@ -43,7 +52,7 @@ stages:
       displayName: Build and push SERVER to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(imageRepositoryserver)
         dockerfile: $(dockerfilePathserver)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
@@ -53,7 +62,7 @@ stages:
       displayName: Build and push WORKER to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(imageRepositoryworker)
         dockerfile: $(dockerfilePathworker)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
